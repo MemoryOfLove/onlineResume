@@ -2,12 +2,12 @@ const path = require('path');
 const webpackMerge = require('webpack-merge');
 const baseConfig = require('./webpack.base.js');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const {CleanWebpackPlugin}=require('clean-webpack-plugin');
 const devConfig = {
   mode: 'development',
   entry: {
     // 👇 对应渲染进程的 app.jsx 入口文件
-    index: path.resolve(__dirname, '../app/renderer/app.jsx'),
+    index: path.resolve(__dirname, '../app/renderer/app.tsx'),
   },
   output: {
     filename: '[name].[hash].js',
@@ -29,7 +29,46 @@ const devConfig = {
       filename: path.resolve(__dirname, '../dist/index.html'),
       chunks: ['index'],
     }),
+    new CleanWebpackPlugin(),
   ],
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader', 'postcss-loader'],
+      },
+      {
+        test: /\.less$/,
+        exclude: /node_modules/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: {
+                localIdentName: '[name]__[local]__[hash:base64:5]',
+              },
+            },
+          },
+          'postcss-loader',
+          'less-loader',
+        ],
+      },
+      //此处处理图片
+      {
+        test: /\.(jpg|png|jpeg|gif)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name]_[hash].[ext]',
+              outputPath: 'images/',
+            },
+          },
+        ],
+      },
+    ],
+  }
 };
 
 module.exports = webpackMerge.merge(baseConfig, devConfig);
