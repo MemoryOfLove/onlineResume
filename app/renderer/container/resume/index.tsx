@@ -1,11 +1,23 @@
-import React, { Component } from 'react'
+import React from 'react';
+import './index.less';
+// 👇 将组件引入
+import ResumeAction from './ResumeAction';
+import ResumeContent from './ResumeContent';
+import ResumeToolbar from './ResumeToolbar';
 
-export default class index extends Component {
-    render() {
-        return (
-            <div>
-                我是简历页面
-            </div>
-        )
-    }
+function Resume() {
+  return (
+    <div styleName="container">
+      <div styleName="header">
+        <ResumeAction />
+      </div>
+      <div styleName="content">
+        <ResumeContent />
+      </div>
+      <div styleName="toolbar">
+        <ResumeToolbar />
+      </div>
+    </div>
+  );
 }
+export default Resume;

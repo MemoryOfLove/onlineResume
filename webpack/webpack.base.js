@@ -8,7 +8,7 @@ module.exports = {
       '@src': path.join(__dirname, '../', 'app/renderer'),
       '@assets': path.join(__dirname, '../', 'assets/'),
       '@src': path.join(__dirname, '../', 'app/renderer'),
-      '@common': path.join(__dirname, '../', 'app/renderer/container/common')
+      '@common': path.join(__dirname, '../', 'app/renderer/common')
     },
   },
   module: {
